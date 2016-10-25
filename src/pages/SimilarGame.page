@@ -1,0 +1,47 @@
+<apex:page showHeader="true" sidebar="true" StandardController="Favorite__c" extensions="SimilarGameController">
+	<apex:form id="fm">
+		<apex:sectionHeader title="お気に入りからリコメンドするデモ" subtitle="{!favorite.Name}" />
+		<apex:pageBlock id="pb">
+			<apex:pageBlockButtons id="pbb">
+				<apex:commandBUtton value="Cancel" action="{!doCancel}" />
+				<apex:commandBUtton value="Recommend" action="{!doRecommend}" rerender="opResult" />
+			</apex:pageBLockButtons>
+			<apex:pageBlockSection columns="2">
+				<apex:outputField value="{!favorite.Game__c}" />
+				<apex:outputField value="{!favorite.Customer__c}" />
+				<apex:outputField value="{!favorite.Genre__c}" />
+			</apex:pageBlockSection>
+		</apex:pageBLock>
+		<apex:outputPanel id="opResult">
+			<apex:pageBlock id="pbResult" title="おすすめ商品">
+				<table width="100%">
+					<tr>
+						<apex:repeat value="{!similarGameDtos}" var="dto">
+						<td>
+							<apex:outputText value="{!dto.game}" />
+							<br/>
+							<apex:outputText value="{!dto.genre}" />
+							<br/>
+							<apex:outputText value="{!dto.score}" />
+							<br/>
+							<img src="{!dto.image}" height="80" width="80" />
+						</td>
+						</apex:repeat>
+					</tr>
+				</table>
+			</apex:pageBlock>
+			<apex:pageBlock id="pbReqRes" title="Request / Response">
+				<apex:pageBlockSection columns="2">
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel value="Request" />
+						<apex:inputTextarea rows="10" cols="50" value="{!request}" disabled="true" />
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel value="Response" />
+						<apex:inputTextarea rows="10" cols="50" value="{!response}" disabled="true" />
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>
